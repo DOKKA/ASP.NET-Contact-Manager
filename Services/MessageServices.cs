@@ -29,8 +29,8 @@ namespace azure_test_003.Services
             myMessage.Html = message;
             
             var credentials = new System.Net.NetworkCredential(
-                Options.SendGridUser ?? "azure_5a6e532d001663d25f9d7f4d97d0520a@azure.com",
-                Options.SendGridKey ?? @"Severed1!");
+                Options.SendGridUser,
+                Options.SendGridKey);
             // Create a Web transport for sending email.
             var transportWeb = new SendGrid.Web(credentials);
             // Send the email.

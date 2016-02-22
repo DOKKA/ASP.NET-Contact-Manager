@@ -3,10 +3,12 @@ using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.Data.Entity;
 using azure_test_003.Models;
+using Microsoft.AspNet.Authorization;
 
 namespace azure_test_003.Controllers
 {
     [RequireHttps]
+    [Authorize]
     public class CmController : Controller
     {
         private ApplicationDbContext _context;
