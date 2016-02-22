@@ -14,6 +14,7 @@ using azure_test_003.ViewModels.Manage;
 namespace azure_test_003.Controllers
 {
     [Authorize]
+    [RequireHttps]
     public class ManageController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Extensions.OptionsModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,10 +11,37 @@ namespace azure_test_003.Services
     // For more details see this link http://go.microsoft.com/fwlink/?LinkID=532713
     public class AuthMessageSender : IEmailSender, ISmsSender
     {
+        public AuthMessageSender(IOptions<AuthMessageSenderOptions> optionsAccessor)
+        {
+            Options = optionsAccessor.Value;
+        }
+
+        public AuthMessageSenderOptions Options { get; }  // set only via Secret Manager
+
         public Task SendEmailAsync(string email, string subject, string message)
         {
             // Plug in your email service here to send an email.
-            return Task.FromResult(0);
+            var myMessage = new SendGrid.SendGridMessage();
+            myMessage.AddTo(email);
+            myMessage.From = new System.Net.Mail.MailAddress("info@azure-test-003.azurewebsites.net", "Kevin Grieger");
+            myMessage.Subject = subject;
+            myMessage.Text = message;
+            myMessage.Html = message;
+            
+            var credentials = new System.Net.NetworkCredential(
+                Options.SendGridUser ?? "azure_5a6e532d001663d25f9d7f4d97d0520a@azure.com",
+                Options.SendGridKey ?? @"Severed1!");
+            // Create a Web transport for sending email.
+            var transportWeb = new SendGrid.Web(credentials);
+            // Send the email.
+            if (transportWeb != null)
+            {
+                return transportWeb.DeliverAsync(myMessage);
+            }
+            else
+            {
+                return Task.FromResult(0);
+            }
         }
 
         public Task SendSmsAsync(string number, string message)

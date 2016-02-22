@@ -6,6 +6,7 @@ using Microsoft.AspNet.Mvc;
 
 namespace azure_test_003.Controllers
 {
+    [RequireHttps]
     public class HomeController : Controller
     {
         public IActionResult Index()

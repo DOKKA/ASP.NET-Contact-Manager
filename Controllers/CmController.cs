@@ -6,6 +6,7 @@ using azure_test_003.Models;
 
 namespace azure_test_003.Controllers
 {
+    [RequireHttps]
     public class CmController : Controller
     {
         private ApplicationDbContext _context;
