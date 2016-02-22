@@ -4,7 +4,7 @@ using Microsoft.AspNet.Mvc.Rendering;
 using Microsoft.Data.Entity;
 using azure_test_003.Models;
 
-namespace azure-test-003.Controllers
+namespace azure_test_003.Controllers
 {
     public class CmController : Controller
     {
